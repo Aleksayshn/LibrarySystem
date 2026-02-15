@@ -46,3 +46,21 @@
 - The biggest design compromise is the single shared repository interface: it satisfies assignment rules but is broader than ideal from a pure ISP perspective.
 - The controller is still simple and procedural by design, which is appropriate for a small console project.
 - Next improvements would be adding automated tests for each use case, adding input validation at the boundary, and introducing a persistent repository implementation while keeping use cases unchanged.
+
+## Clean Architecture Mapping
+
+| Layer | Code Component | Path | Responsibility |
+|---|---|---|---|
+| Entities (Enterprise Business Rules) | `Book` | `src/entities/Book.java` | Core book data and state transitions (`borrow`, `returnBook`). |
+| Entities (Enterprise Business Rules) | `Member` | `src/entities/Member.java` | Core member identity and profile data (`id`, `firstName`, `lastName`). |
+| Entities (Enterprise Business Rules) | `BorrowRecord` | `src/entities/BorrowRecord.java` | Borrow transaction state and return status. |
+| Use Cases (Application Business Rules) | `AddBookUseCase` | `src/usecases/AddBookUseCase.java` | Adds a new book to the system through repository abstraction. |
+| Use Cases (Application Business Rules) | `RegisterMemberUseCase` | `src/usecases/RegisterMemberUseCase.java` | Registers a new member. |
+| Use Cases (Application Business Rules) | `BorrowBookUseCase` | `src/usecases/BorrowBookUseCase.java` | Validates and performs borrowing, including borrow-limit rule. |
+| Use Cases (Application Business Rules) | `ReturnBookUseCase` | `src/usecases/ReturnBookUseCase.java` | Handles returning a borrowed book. |
+| Use Cases (Application Business Rules) | `ListBooksUseCase` | `src/usecases/ListBooksUseCase.java` | Returns all currently available books. |
+| Use Cases (Application Business Rules) | `FindMembersByLastNameUseCase` | `src/usecases/FindMembersByLastNameUseCase.java` | Finds members by last name for disambiguation before borrowing. |
+| Interface Adapters | `LibraryRepository` | `src/usecases/LibraryRepository.java` | Boundary interface (port) required by use cases for data access. |
+| Interface Adapters | `InMemoryLibraryRepository` | `src/adapters/InMemoryLibraryRepository.java` | In-memory data adapter using `ArrayList`; implements repository boundary. |
+| Frameworks & Drivers | `LibraryController` | `src/frameworks/LibraryController.java` | Console UI flow: input/output, menu handling, delegates to use cases. |
+| Frameworks & Drivers | `Main` | `src/main/Main.java` | Composition root: wires repository, use cases, and controller. |
