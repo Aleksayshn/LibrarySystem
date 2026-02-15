@@ -33,6 +33,13 @@
 ## Additional Feature
 - Borrowing limit is implemented in `BorrowBookUseCase` with `BORROW_LIMIT = 3`.
 - Validation uses `countActiveBorrowsByMember` before allowing a new borrow.
+- Member lookup during borrow is done by last name, then confirmed by exact member ID to avoid ambiguity when names match.
+
+## Borrowing Flow (Name Collision Safe)
+- Register member with `First Name` and `Last Name`.
+- During borrowing, enter member last name.
+- System prints all matching members as: `ID | First Name | Last Name`.
+- Enter exact member `ID` to complete borrow.
 
 ## Reflection
 - The architecture cleanly separates entities, application logic, adapters, and framework code, which made changes straightforward and test-friendly.

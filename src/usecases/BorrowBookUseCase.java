@@ -21,7 +21,7 @@ public class BorrowBookUseCase {
         Book book = repository.findBookById(bookId)
                 .orElseThrow(() -> new IllegalArgumentException("Book not found."));
         repository.findMemberById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("Member not found."));
+                .orElseThrow(() -> new IllegalArgumentException("Member ID not found."));
 
         if (!book.isAvailable()) {
             throw new IllegalStateException("Book already borrowed.");

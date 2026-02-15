@@ -13,8 +13,8 @@ public class RegisterMemberUseCase {
         this.repository = repository;
     }
 
-    public void execute(String name) {
-        Member member = new Member(name);
+    public void execute(String firstName, String lastName) {
+        Member member = new Member(firstName, lastName);
         repository.saveMember(member);
     }
 }

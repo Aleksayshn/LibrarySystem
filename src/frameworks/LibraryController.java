@@ -2,6 +2,7 @@ package frameworks;
 
 import usecases.AddBookUseCase;
 import usecases.BorrowBookUseCase;
+import usecases.FindMembersByLastNameUseCase;
 import usecases.ListBooksUseCase;
 import usecases.RegisterMemberUseCase;
 import usecases.ReturnBookUseCase;
@@ -18,6 +19,7 @@ public class LibraryController {
     private final AddBookUseCase addBookUseCase;
     private final RegisterMemberUseCase registerMemberUseCase;
     private final BorrowBookUseCase borrowBookUseCase;
+    private final FindMembersByLastNameUseCase findMembersByLastNameUseCase;
     private final ReturnBookUseCase returnBookUseCase;
     private final ListBooksUseCase listBooksUseCase;
     private final Map<String, MenuAction> actions = new LinkedHashMap<>();
@@ -25,12 +27,14 @@ public class LibraryController {
     public LibraryController(AddBookUseCase addBookUseCase,
                              RegisterMemberUseCase registerMemberUseCase,
                              BorrowBookUseCase borrowBookUseCase,
+                             FindMembersByLastNameUseCase findMembersByLastNameUseCase,
                              ReturnBookUseCase returnBookUseCase,
                              ListBooksUseCase listBooksUseCase) {
 
         this.addBookUseCase = addBookUseCase;
         this.registerMemberUseCase = registerMemberUseCase;
         this.borrowBookUseCase = borrowBookUseCase;
+        this.findMembersByLastNameUseCase = findMembersByLastNameUseCase;
         this.returnBookUseCase = returnBookUseCase;
         this.listBooksUseCase = listBooksUseCase;
         registerActions();
@@ -77,16 +81,31 @@ public class LibraryController {
     }
 
     private void registerMember(Scanner scanner) {
-        System.out.print("Member Name: ");
-        String name = scanner.nextLine();
-        registerMemberUseCase.execute(name);
+        System.out.print("First Name: ");
+        String firstName = scanner.nextLine();
+        System.out.print("Last Name: ");
+        String lastName = scanner.nextLine();
+        registerMemberUseCase.execute(firstName, lastName);
         System.out.println("Member registered.");
     }
 
     private void borrowBook(Scanner scanner) {
         System.out.print("Book ID: ");
         String bookId = scanner.nextLine();
-        System.out.print("Member ID: ");
+        System.out.print("Member Last Name: ");
+        String lastName = scanner.nextLine();
+
+        var members = findMembersByLastNameUseCase.execute(lastName);
+        if (members.isEmpty()) {
+            System.out.println("No members found with last name: " + lastName);
+            return;
+        }
+
+        System.out.println("Matching members:");
+        members.forEach(member ->
+                System.out.println(member.getId() + " | " + member.getFirstName() + " | " + member.getLastName()));
+
+        System.out.print("Enter exact Member ID: ");
         String memberId = scanner.nextLine();
         borrowBookUseCase.execute(bookId, memberId);
         System.out.println("Book borrowed.");

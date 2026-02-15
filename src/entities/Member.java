@@ -5,18 +5,28 @@ import java.util.UUID;
 public class Member {
 
     private final String id;
-    private final String name;
+    private final String firstName;
+    private final String lastName;
 
-    public Member(String name) {
+    public Member(String firstName, String lastName) {
         this.id = UUID.randomUUID().toString();
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 }

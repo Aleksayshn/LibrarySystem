@@ -20,6 +20,8 @@ public interface LibraryRepository {
 
     Optional<Member> findMemberById(String id);
 
+    List<Member> findMembersByLastName(String lastName);
+
     List<Book> findAllBooks();
 
     void saveBorrowRecord(BorrowRecord record);

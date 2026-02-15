@@ -43,6 +43,13 @@ public class InMemoryLibraryRepository implements LibraryRepository {
     }
 
     @Override
+    public List<Member> findMembersByLastName(String lastName) {
+        return members.stream()
+                .filter(m -> m.getLastName().equalsIgnoreCase(lastName))
+                .toList();
+    }
+
+    @Override
     public List<Book> findAllBooks() {
         return List.copyOf(books);
     }
