@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Abstraction for library data persistence.
- * Following Dependency Inversion Principle.
+ * Shared repository abstraction used by all use cases.
  */
 public interface LibraryRepository {
 

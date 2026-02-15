@@ -3,7 +3,6 @@ package usecases;
 import entities.Book;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Returns all available books.
@@ -20,6 +19,6 @@ public class ListBooksUseCase {
         return repository.findAllBooks()
                 .stream()
                 .filter(Book::isAvailable)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

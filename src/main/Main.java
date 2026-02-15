@@ -2,7 +2,11 @@ package main;
 
 import adapters.InMemoryLibraryRepository;
 import frameworks.LibraryController;
-import usecases.*;
+import usecases.AddBookUseCase;
+import usecases.BorrowBookUseCase;
+import usecases.ListBooksUseCase;
+import usecases.RegisterMemberUseCase;
+import usecases.ReturnBookUseCase;
 
 public class Main {
 

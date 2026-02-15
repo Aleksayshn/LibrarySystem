@@ -44,7 +44,7 @@ public class InMemoryLibraryRepository implements LibraryRepository {
 
     @Override
     public List<Book> findAllBooks() {
-        return books;
+        return List.copyOf(books);
     }
 
     @Override
